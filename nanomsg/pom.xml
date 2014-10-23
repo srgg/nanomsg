@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.nanomsg</groupId>
+        <artifactId>nanomsg-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
+    <artifactId>nanomsg</artifactId>
+    <name>nanomsg</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>nar</packaging>
+
+    <properties>
+        <skipTests>true</skipTests>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkMode>pertest</forkMode>
+                    <argLine>-Xcheck:jni</argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.maven-nar</groupId>
+                <artifactId>nar-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <java>
+                        <include>true</include>
+                    </java>
+                    <cpp>
+                        <exceptions>false</exceptions>
+                    </cpp>
+                    <libraries>
+                        <library>
+                            <type>jni</type>
+                            <narSystemPackage>org.nanomsg</narSystemPackage>
+                            <linkCPP>false</linkCPP>
+                        </library>
+                    </libraries>
+                    <linker>
+                        <sysLibs>
+                            <sysLib>
+                                <name>nanomsg</name>
+                            </sysLib>
+                        </sysLibs>
+                    </linker>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
